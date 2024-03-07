@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: multiclusterengine-catalog
+  namespace: olm
+spec:
+  displayName: MultiCluster Engine
+  image: quay.io/stolostron/cmb-custom-registry:2.10.0-SNAPSHOT-2024-02-28-22-55-36
+  publisher: Red Hat
+  sourceType: grpc
+  updateStrategy:
+    registryPoll:
+      interval: 10m
