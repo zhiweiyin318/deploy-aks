@@ -53,6 +53,12 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
+        - name: ENABLE_WEBHOOKS
+          value: "false"
+        - name: UNIT_TEST
+          value: "true"
+        - name: NON_OCPHUB
+          value: "true"
         - name: OPERAND_IMAGE_ADDON_MANAGER
           value: quay.io/stolostron/addon-manager@sha256:4b96dceaa4bb4606cb950c7d2b3be9162d29ebf7b83ca2c47b80b20c2fa8826a
         - name: OPERAND_IMAGE_APISERVER_NETWORK_PROXY
@@ -149,7 +155,7 @@ spec:
           value: multicluster-engine
         - name: OPERATOR_CONDITION_NAME
           value: multicluster-engine.v2.5.0
-        image: quay.io/stolostron/backplane-operator@sha256:e387c8955c31a2c02090e23762de5d492b1ac9e7b43a488cae55f12726ef21bf
+        image: quay.io/stolostron/backplane-operator:latest
         imagePullPolicy: IfNotPresent
         livenessProbe:
           failureThreshold: 3
@@ -188,10 +194,10 @@ spec:
           readOnlyRootFilesystem: true
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /tmp/k8s-webhook-server/serving-certs
-          name: cert
-          readOnly: true
+        # volumeMounts:
+        # - mountPath: /tmp/k8s-webhook-server/serving-certs
+        #   name: cert
+        #   readOnly: true
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -202,8 +208,8 @@ spec:
       serviceAccount: multicluster-engine-operator
       serviceAccountName: multicluster-engine-operator
       terminationGracePeriodSeconds: 10
-      volumes:
-      - name: cert
-        secret:
-          defaultMode: 420
-          secretName: multicluster-engine-operator-webhook
+      # volumes:
+      # - name: cert
+      #   secret:
+      #     defaultMode: 420
+      #     secretName: multicluster-engine-operator-webhook

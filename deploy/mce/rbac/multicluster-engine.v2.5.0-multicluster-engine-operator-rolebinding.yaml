@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: multicluster-engine.v2.5.0-multicluster-engine-operat-7c79456b4
+  namespace: multicluster-engine
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: multicluster-engine.v2.5.0-multicluster-engine-operat-7c79456b4
+subjects:
+- kind: ServiceAccount
+  name: multicluster-engine-operator
+  namespace: multicluster-engine

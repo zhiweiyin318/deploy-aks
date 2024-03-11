@@ -9,6 +9,15 @@ webhook validating serving-cert
 operatorconditions.operators.coreos.com
 multicluster-engine.v2.5.0  OLM upgrade?
 
+servicemonitors.monitoring.coreos.com
+2024-03-10T12:43:57.195Z	ERROR	controller-runtime.source.EventHandler	failed to get informer from cache	{"error": "failed to get API group resources: unable to retrieve the complete list of server APIs: monitoring.coreos.com/v1: the server could not find the requested resource"}
+
+2024-03-10T12:43:57.195Z	ERROR	controller-runtime.source.EventHandler	failed to get informer from cache	{"error": "failed to get API group resources: unable to retrieve the complete list of server APIs: config.openshift.io/v1: the server could not find the requested resource"}
+
+2024-03-10T14:20:49.047Z	ERROR	reconcile	Odd error delete template	{"error": "failed to get API group resources: unable to retrieve the complete list of server APIs: route.openshift.io/v1: the server could not find the requested resource"}
+
+
+
 ### components
 
 cluster-manager
