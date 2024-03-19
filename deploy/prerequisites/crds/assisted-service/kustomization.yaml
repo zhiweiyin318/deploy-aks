@@ -1,0 +1,8 @@
+resources:
+  - agent-install.openshift.io_nmstateconfigs.yaml
+  - extensions.hive.openshift.io_agentclusterinstalls.yaml
+  - agent-install.openshift.io_hypershiftagentserviceconfigs.yaml
+  - agent-install.openshift.io_infraenvs.yaml
+  - agent-install.openshift.io_agentserviceconfigs.yaml
+  - agent-install.openshift.io_agents.yaml
+  - agent-install.openshift.io_agentclassifications.yaml

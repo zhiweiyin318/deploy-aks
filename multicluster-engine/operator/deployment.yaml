@@ -1,0 +1,131 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    control-plane: backplane-operator
+  name: multicluster-engine-operator
+  namespace: multicluster-engine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      control-plane: backplane-operator
+  template:
+    metadata:
+      labels:
+        control-plane: backplane-operator
+        ocm-antiaffinity-selector: backplane-operator
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: ocm-antiaffinity-selector
+                  operator: In
+                  values:
+                  - backplane-operator
+              topologyKey: topology.kubernetes.io/zone
+            weight: 70
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: ocm-antiaffinity-selector
+                  operator: In
+                  values:
+                  - backplane-operator
+              topologyKey: kubernetes.io/hostname
+            weight: 35
+      containers:
+      - args:
+        - --leader-elect
+        - --deploy-on-ocp=false
+        command:
+        - /app/backplane-operator
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: OPERAND_IMAGE_MANAGEDCLUSTER_IMPORT_CONTROLLER
+          value: quay.io/stolostron/managedcluster-import-controller:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_MULTICLOUD_MANAGER
+          value: quay.io/stolostron/multicloud-manager:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_PLACEMENT
+          value: quay.io/stolostron/placement:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_HYPERSHIFT_ADDON_OPERATOR
+          value: quay.io/stolostron/hypershift-addon-operator:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_HYPERSHIFT_ADDON_OPERATOR_CANARY_TEST
+          value: quay.io/stolostron/hypershift-addon-operator-canary-test:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_HYPERSHIFT_OPERATOR
+          value: quay.io/stolostron/hypershift-operator:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_REGISTRATION
+          value: quay.io/stolostron/registration:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_REGISTRATION_OPERATOR
+          value: quay.io/stolostron/registration-operator:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_WORK
+          value: quay.io/stolostron/work:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_KUBE_RBAC_PROXY_MCE
+          value: quay.io/stolostron/kube-rbac-proxy-mce:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_APISERVER_NETWORK_PROXY
+          value: quay.io/stolostron/apiserver-network-proxy:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_AWS_ENCRYPTION_PROVIDER
+          value: quay.io/stolostron/aws-encryption-provider:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_CLUSTER_API
+          value: quay.io/stolostron/cluster-api:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_CLUSTER_API_PROVIDER_AWS
+          value: quay.io/stolostron/cluster-api-aws-controller:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_CLUSTER_API_PROVIDER_AGENT
+          value: quay.io/stolostron/cluster-api-provider-agent:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_CLUSTER_API_PROVIDER_AZURE
+          value: quay.io/stolostron/cluster-api-provider-azure:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERAND_IMAGE_CLUSTER_API_PROVIDER_KUBEVIRT
+          value: quay.io/stolostron/cluster-api-provider-kubevirt:2.5.0-BACKPLANE-2024-03-11-20-44-30
+        - name: OPERATOR_VERSION
+          value: 2.6.0
+        image: quay.io/zhiweiyin/backplane-operator:v2.6.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        name: backplane-operator
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8081
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 100m
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 20Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+#        volumeMounts:
+#        - mountPath: /tmp/k8s-webhook-server/serving-certs
+#          name: cert
+#          readOnly: true
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccountName: multicluster-engine-operator
+      terminationGracePeriodSeconds: 10
+#      volumes:
+#      - name: cert
+#        secret:
+#          defaultMode: 420
+#          secretName: multicluster-engine-operator-webhook

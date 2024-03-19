@@ -1,68 +1,63 @@
 # deploy-aks
 
+## Install all manifests
 
-## MCE 
+1. Apply prerequisites CRDs and Create `open-cluster-management` ns.
 
-### dependency
-webhook validating serving-cert 
+```
+kubectl apply -k deploy/prerequisites
+```
+2. Create an image pull secret named `multiclusterhub-operator-pull-secret` in `open-cluster-management` ns.
+3. Install cluster-manager.
 
-operatorconditions.operators.coreos.com
-multicluster-engine.v2.5.0  OLM upgrade?
+```
+kubectl apply -k deploy/cluster-manager
+```
 
-servicemonitors.monitoring.coreos.com
-2024-03-10T12:43:57.195Z	ERROR	controller-runtime.source.EventHandler	failed to get informer from cache	{"error": "failed to get API group resources: unable to retrieve the complete list of server APIs: monitoring.coreos.com/v1: the server could not find the requested resource"}
+4. Create clusterManager CR.
 
-2024-03-10T12:43:57.195Z	ERROR	controller-runtime.source.EventHandler	failed to get informer from cache	{"error": "failed to get API group resources: unable to retrieve the complete list of server APIs: config.openshift.io/v1: the server could not find the requested resource"}
+```
+kubectl apply -k deploy/cluster-manager/samples
+```
+5. Install foundation.
 
-2024-03-10T14:20:49.047Z	ERROR	reconcile	Odd error delete template	{"error": "failed to get API group resources: unable to retrieve the complete list of server APIs: route.openshift.io/v1: the server could not find the requested resource"}
+```
+kubectl apply -k deploy/foundation
+```
 
+6. Set hub apiserver URL to the `spec.hubKubeAPIServerURL` in the `deploy/foundation/klusterletconfig/klusterletconfig.yaml`
 
+```
+kubectl apply -k deploy/foundation/klusterletconfig
+```
 
-### components
+7. Install addons.
 
-cluster-manager
-cluster-lifecycle
-server-foundation  
-discovery
-hypershift-local-hosting  
-hypershift   ?
+```
+kubectl apply -k deploy/addons
+```
 
-console-mce x
+8. Import local-cluster.
 
-local-cluster 
+```
+kubectl apply -k deploy/local-cluster
+```
 
+## Install multicluster-engine 
 
-## policy add-on
-grc-policy-addon-controller
-grc-policy-propagator  metric, validate-webhook (cert) 
+### Option 1
+```
+kubectl apply -k multicluster-engine/olm
+```
 
+### Option 2
+```
+kubectl apply -k multicluster-engine/operator
+```
 
-## cluster-lifecycle
-clusterclaims x
-cluster-curator x
-cluster-image-set https://github.com/stolostron/cluster-image-set-controller  ?
-provider-credential-controller https://github.com/stolostron/provider-credential-controller  x
-clusterlifecycle-state-metrics ? 
+## Install multicluster-engine CR
+```
+kubectl apply -k multicluster-engine/sammples
+```
 
-
-## server-foundation
-webhook serving-cert 
-proxyserver serving-cert  APIService inject-cabundle
-ocm-controller  hive.openshift.io 
-import-controller  hive.openshift.io
-
-## hypershift
-hypershift-addon-manager  infrastructures.config.openshift.io multiclusterengines.multicluster.openshift.io clusterserviceversions.operators.coreos.com
-
-
-## discovery
-discovery-operator  https://github.com/stolostron/discovery   x
-
-
-1. OLM  
-2. Helm/Kustomize  MCE 
-3. manifests no MCE
-
-1. webhook disable  kind  
-2. non-ocp run 
-3. 
+## Install policy addon

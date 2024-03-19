@@ -1,0 +1,54 @@
+# Copyright Contributors to the Open Cluster Management project
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: managedcluster-import-controller
+  namespace: open-cluster-management
+  labels:
+    app: managedcluster-import-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: managedcluster-import-controller
+  template:
+    metadata:
+      labels:
+        name: managedcluster-import-controller
+    spec:
+      serviceAccountName: managedcluster-import-controller
+      containers:
+      - name: managedcluster-import-controller
+        image: quay.io/stolostron/managedcluster-import-controller:latest
+        imagePullPolicy: IfNotPresent # This is required because in kind-clusters, the image is built locally
+        args:
+          - "managedcluster-import-controller"
+          - "--feature-gates=AgentRegistration=false"
+        env:
+        - name: WATCH_NAMESPACE
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: MAX_CONCURRENT_RECONCILES
+          value: "10"
+        - name: OPERATOR_NAME
+          value: managedcluster-import-controller
+        - name: DEFAULT_IMAGE_PULL_SECRET
+          value: multiclusterhub-operator-pull-secret
+        - name: DEFAULT_IMAGE_REGISTRY
+        - name: REGISTRATION_OPERATOR_IMAGE
+          value: quay.io/stolostron/registration-operator:2.10.0-SNAPSHOT-2024-03-18-02-55-35
+        - name: REGISTRATION_IMAGE
+          value: quay.io/stolostron/registration:2.10.0-SNAPSHOT-2024-03-18-02-55-35
+        - name: WORK_IMAGE
+          value: quay.io/stolostron/work:2.10.0-SNAPSHOT-2024-03-18-02-55-35
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: GOMEMLIMIT
+          value: 2750MiB

@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: multicluster-engine
+  namespace: multicluster-engine
+spec:
+  channel: stable
+  config: {}  // set config deploy-on-ocp
+  installPlanApproval: Automatic
+  name: multicluster-engine
+  source: multiclusterengine-catalog
+  sourceNamespace: multicluster-engine
+  startingCSV: multicluster-engine.v2.6.0

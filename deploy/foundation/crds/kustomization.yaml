@@ -1,0 +1,2 @@
+resources:
+  - config.open-cluster-management.io_klusterletconfig.crd.yaml

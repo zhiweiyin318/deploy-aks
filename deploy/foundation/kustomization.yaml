@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- crds
+- rbac
+- operator
+
+
+
+images:
+  - name: quay.io/stolostron/managedcluster-import-controller:latest
+    newName: quay.io/zhiweiyin/managedcluster-import-controller
+    newTag: latest
+
+patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: replace
+        path: "/spec/template/spec/containers/0/imagePullPolicy"
+        value: IfNotPresent
+
