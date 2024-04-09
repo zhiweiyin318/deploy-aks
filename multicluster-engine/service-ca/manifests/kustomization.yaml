@@ -1,0 +1,10 @@
+
+resources:
+- 01_namespace.yaml
+- 00_roles.yaml
+- 03_operator.cr.yaml
+- 02_service.yaml
+- 05_deploy.yaml
+- 04_sa.yaml
+- 03_cm.yaml
+- 07_clusteroperator.yaml

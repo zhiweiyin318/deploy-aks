@@ -1,3 +1,4 @@
 
 resources:
+- klusterletconfig.yaml
 - multiclusterengine.yaml

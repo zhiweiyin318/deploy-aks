@@ -5,7 +5,7 @@ metadata:
   namespace: multicluster-engine
 spec:
   displayName: MultiCluster Engine
-  image: quay.io/zhiweiyin/backplane-operator-bundle:v2.6.0
+  image: quay.io/zhiweiyin/backplane-operator-catalog:v2.6.0
   publisher: Red Hat
   sourceType: grpc
   updateStrategy:

@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - crds
   - namespace.yaml
- # - image-pull-secret.yaml
+  - image-pull-secret.yaml

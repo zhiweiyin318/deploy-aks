@@ -46,6 +46,25 @@ kubectl apply -k deploy/local-cluster
 ## Install multicluster-engine 
 
 ### Option 1
+
+1. install operator-sdk from https://github.com/operator-framework/operator-sdk/releases/tag/v1.34.1
+2. install olm
+
+```
+operator-sdk olm install 
+```
+3. create ns multicluster-engine 
+
+```
+kubectl create ns multicluster-engine
+```
+4. create image pull secret (optional)
+
+```
+kubectl apply -f image-pullsecret.yaml -n multicluster-engine 
+
+```
+5. install MCE operator
 ```
 kubectl apply -k multicluster-engine/olm
 ```
@@ -61,3 +80,13 @@ kubectl apply -k multicluster-engine/sammples
 ```
 
 ## Install policy addon
+
+
+## Install service-ca operator on Kind cluster
+
+```
+kubectl label nodes kind-control-plane node-role.kubernetes.io/master=
+
+kubectl apply -k multicluster-engine/service-ca/crds
+kubectl apply -k multicluster-engine/service-ca/manifests
+```

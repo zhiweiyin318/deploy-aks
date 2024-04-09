@@ -1,0 +1,4 @@
+
+resources:
+- clusteroperators-crd.yaml
+- servicecas-crd.yaml
