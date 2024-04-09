@@ -4,7 +4,7 @@ metadata:
   name: multiclusterengine
 spec:
   availabilityConfig: High
-  #imagePullSecret: multiclusterhub-operator-pull-secret
+  imagePullSecret: open-cluster-management-image-pull-credentials
   overrides:
     components:
       - enabled: true

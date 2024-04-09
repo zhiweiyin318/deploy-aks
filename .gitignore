@@ -1,0 +1,2 @@
+multicluster-engine/prerequisites/image-pull-secret.yaml
+deploy/prerequisites/image-pull-secret.yaml

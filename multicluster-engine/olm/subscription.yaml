@@ -5,7 +5,7 @@ metadata:
   namespace: multicluster-engine
 spec:
   channel: stable
-  config: {}  // set config deploy-on-ocp
+  config: {} 
   installPlanApproval: Automatic
   name: multicluster-engine
   source: multiclusterengine-catalog
