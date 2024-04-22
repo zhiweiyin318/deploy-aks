@@ -1,4 +1,0 @@
-
-resources:
-- hypershift-addon-manager_clusterrole.yaml
-- hypershift-addon-manager-clusterrolebinding.yaml

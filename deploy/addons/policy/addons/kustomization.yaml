@@ -1,5 +1,0 @@
-
-resources:
-- open-cluster-managementconfig-policy-controller.yaml
-- open-cluster-managementgovernance-policy-framework.yaml
-- open-cluster-managementiam-policy-controller.yaml

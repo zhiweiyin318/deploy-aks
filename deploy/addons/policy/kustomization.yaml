@@ -1,5 +1,0 @@
-resources:
-- clustermanagementaddons
-- crds
-- rbac
-- operators
