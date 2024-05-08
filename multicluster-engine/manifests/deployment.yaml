@@ -41,7 +41,6 @@ spec:
       containers:
       - args:
         - --leader-elect
-        - --deploy-on-ocp=false
         command:
         - /app/backplane-operator
         env:
@@ -85,8 +84,10 @@ spec:
           value: quay.io/stolostron/cluster-api-provider-kubevirt:2.6.0-BACKPLANE-2024-04-13-12-46-50
         - name: OPERATOR_VERSION
           value: 2.6.0
-        image: quay.io/zhiweiyin/backplane-operator:v2.6.0
-        imagePullPolicy: IfNotPresent
+        - name: OPERATOR_CONDITION_NAME
+          value: multicluster-engine.v2.6.0
+        image: quay.io/zhiweiyin/backplane-operator:latest
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /healthz
@@ -114,18 +115,23 @@ spec:
             - ALL
           privileged: false
           readOnlyRootFilesystem: true
-#        volumeMounts:
+        volumeMounts:
 #        - mountPath: /tmp/k8s-webhook-server/serving-certs
 #          name: cert
 #          readOnly: true
+        - name: tmpdir
+          mountPath: /tmp/k8s-webhook-server/serving-certs
       securityContext:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
       serviceAccountName: multicluster-engine-operator
       terminationGracePeriodSeconds: 10
-#      volumes:
+      volumes:
 #      - name: cert
 #        secret:
 #          defaultMode: 420
 #          secretName: multicluster-engine-operator-webhook
+      - name: tmpdir
+        emptyDir:
+          medium: Memory

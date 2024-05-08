@@ -1,0 +1,19 @@
+apiVersion: operators.coreos.com/v2
+kind: OperatorCondition
+metadata:
+  labels:
+    operators.coreos.com/multicluster-engine.multicluster-engine: ""
+  name: multicluster-engine.v2.6.0
+  namespace: multicluster-engine
+spec:
+  conditions:
+  - lastTransitionTime: "2024-05-05T00:07:55Z"
+    message: ""
+    reason: Upgradeable
+    status: "True"
+    type: Upgradeable
+  deployments:
+  - multicluster-engine-operator
+  serviceAccounts:
+  - multicluster-engine-operator
+  - multicluster-engine-operator
