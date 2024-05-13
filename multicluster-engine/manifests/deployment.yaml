@@ -40,10 +40,14 @@ spec:
             weight: 35
       containers:
       - args:
-        - --leader-elect
+        - --leader-elect=false
         command:
         - /app/backplane-operator
         env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
         - name: POD_NAMESPACE
           valueFrom:
             fieldRef:
@@ -119,7 +123,7 @@ spec:
 #        - mountPath: /tmp/k8s-webhook-server/serving-certs
 #          name: cert
 #          readOnly: true
-        - name: tmpdir
+        - name: cert
           mountPath: /tmp/k8s-webhook-server/serving-certs
       securityContext:
         runAsNonRoot: true
@@ -128,10 +132,9 @@ spec:
       serviceAccountName: multicluster-engine-operator
       terminationGracePeriodSeconds: 10
       volumes:
-#      - name: cert
-#        secret:
-#          defaultMode: 420
-#          secretName: multicluster-engine-operator-webhook
-      - name: tmpdir
+      - name: cert
+#       secret:
+#         defaultMode: 420
+#         secretName: multicluster-engine-operator-webhook
         emptyDir:
           medium: Memory
