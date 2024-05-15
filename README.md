@@ -19,60 +19,53 @@ Install OLM by the scripts.
 bash ./prepare/olm/prepare-olm.sh 
 ```
 
-## Install service-ca operator
-
-The service-ca operator is a workaround for the serving-cert ca bundle for the webhook annotation.
-
-For KinD cluster, need to add master label for the node. (TODO: remove this step.)
-```
-kubectl label nodes kind-control-plane node-role.kubernetes.io/master=
-```
-
-Install the operator.
-```
-kubectl apply -k prepare/service-ca/crds
-kubectl apply -k prepare/service-ca/manifests
-```
 
 ## Install MCE 
-1. Create ns `multicluster-engine`.
+1. Create ns `multicluster-engine`, fill your `dockerconfigjson` to the image pull secret `multicluster-engine/prerequisites/image-pull-secret.yaml` and create image pull secret in the `multicluster-engine` ns.
 
 ```
-kubectl create ns multicluster-engine
-```
-2. Create image pull secret named `open-cluster-management-image-pull-credentials` in the ns `multicluster-engine`.
-
-```
-kubectl apply -f image-pullsecret.yaml -n multicluster-engine 
+kubectl apply -k multicluster-engine/prerequisites/
 
 ```
 
-3. Install MCE catalogSource and subscription.
+2. Install MCE catalogSource and subscription.
 
-    Option 1: Install dev MCE catalogSource and subscription. 
+```
+kubectl apply -k multicluster-engine/olm
+```
 
-    Change the image in multicluster-engine/olm-dev/catalogsource.yaml
-and then deploy
-    ```
-    kubectl apply -k multicluster-engine/olm-dev
-    ```
+3. Install multicluster-engine CR and klusterletConfig.
 
-    Option 2: Install release MCE catalogSource and subscription.
-    Change the image in multicluster-engine/olm-release/catalogsource.yaml
-and then deploy
-    ```
-    kubectl apply -k multicluster-engine/olm-release
-    ```
-    Currently, cannot pull the MCE operator image since there is no image pull secret in the released csv.  
+Change the hubKubeAPIServerURL in` multicluster-engine/samples/klusterletconfig.yaml` and then deploy.
 
-4. Install multicluster-engine CR and klusterletConfig
-
- Change the hubKubeAPIServerURL in multicluster-engine/samples/klusterletconfig.yaml 
- and then deploy.
 ```
 kubectl apply -k multicluster-engine/samples
 ```
 
+## Install MCH
 
-## Install policy addon
+1. Create ns `open-cluster-management`, fill your `dockerconfigjson` to the image pull secret `multiclusterhub/prerequisites/image-pull-secret.yaml` and create image pull secret in the `open-cluster-management` and `olm` ns.
 
+```
+kubectl apply -k multiclusterhub/prerequisites/
+
+```
+
+2. Install MCE catalogSource and subscription.
+
+```
+kubectl apply -k multiclusterhub/olm
+```
+
+3. Install MCH CR 
+
+```
+kubectl apply -f multiclusterhub/samples/multiclusterhub.yaml
+```
+
+4. Install klusterletConfig after MCE CR is created.
+ 
+Change the hubKubeAPIServerURL in `multicluster-engine/samples/klusterletconfig.yaml` and then deploy.
+```
+kubectl apply -f multiclusterhub/samples/klusterletconfig.yaml
+```

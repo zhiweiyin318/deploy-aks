@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: multicluster-engine-operator
+  name: default
   namespace: multicluster-engine
 spec:
   targetNamespaces:
