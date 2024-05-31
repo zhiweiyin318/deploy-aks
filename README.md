@@ -44,7 +44,7 @@ Change the hubKubeAPIServerURL in` multicluster-engine/samples/klusterletconfig.
 kubectl apply -k multicluster-engine/samples
 ```
 
-## ## Install MCE via manifests
+## Install MCE via manifests
 1. Create ns `multicluster-engine`. The images in the manifests are all public, no need image pull secret.
 
 ```
