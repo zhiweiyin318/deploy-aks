@@ -20,7 +20,7 @@ bash ./prepare/olm/prepare-olm.sh
 ```
 
 
-## Install MCE 
+## Install MCE via OLM
 1. Create ns `multicluster-engine`, fill your `dockerconfigjson` to the image pull secret `multicluster-engine/prerequisites/image-pull-secret.yaml` and create image pull secret in the `multicluster-engine` ns.
 
 ```
@@ -42,7 +42,28 @@ Change the hubKubeAPIServerURL in` multicluster-engine/samples/klusterletconfig.
 kubectl apply -k multicluster-engine/samples
 ```
 
-## Install MCH
+## ## Install MCE via manifests
+1. Create ns `multicluster-engine`, fill your `dockerconfigjson` to the image pull secret `multicluster-engine/prerequisites/image-pull-secret.yaml` and create image pull secret in the `multicluster-engine` ns.
+
+```
+kubectl apply -k multicluster-engine/prerequisites/
+
+```
+
+2. Create manifests
+```
+kubectl apply -k multicluster-engine/manifests/
+```
+
+3. Install multicluster-engine CR and klusterletConfig.
+
+Change the hubKubeAPIServerURL in` multicluster-engine/samples/klusterletconfig.yaml` and then deploy.
+
+```
+kubectl apply -k multicluster-engine/samples
+```
+
+## Install ACM
 
 1. Create ns `open-cluster-management`, fill your `dockerconfigjson` to the image pull secret `multiclusterhub/prerequisites/image-pull-secret.yaml` and create image pull secret in the `open-cluster-management` and `olm` ns.
 

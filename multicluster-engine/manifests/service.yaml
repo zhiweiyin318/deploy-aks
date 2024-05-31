@@ -3,9 +3,6 @@ kind: Service
 metadata:
   annotations:
     service.beta.openshift.io/serving-cert-secret-name: multicluster-engine-operator-webhook
-  labels:
-    olm.managed: "true"
-    operators.coreos.com/multicluster-engine.multicluster-engine: ""
   name: multicluster-engine-operator-webhook-service
   namespace: multicluster-engine
 spec:

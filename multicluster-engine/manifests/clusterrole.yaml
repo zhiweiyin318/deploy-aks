@@ -215,9 +215,11 @@ rules:
   - namespaces
   - secrets
   verbs:
+  - create
   - delete
   - get
   - list
+  - update
   - watch
 - apiGroups:
   - ""
@@ -502,6 +504,23 @@ rules:
   - addon.open-cluster-management.io
   resources:
   - clustermanagementaddons
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - addon.open-cluster-management.io
+  resources:
+  - clustermanagementaddons
+  - clustermanagementaddons/finalizers
+  - clustermanagementaddons/status
+  - managedclusteraddons
+  - managedclusteraddons/finalizers
+  - managedclusteraddons/status
   verbs:
   - create
   - delete
@@ -826,6 +845,20 @@ rules:
   - watch
 - apiGroups:
   - agent.open-cluster-management.io
+  resources:
+  - klusterletaddonconfigs
+  - klusterletaddonconfigs/finalizers
+  - klusterletaddonconfigs/status
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - agent.open-cluster-management.io
   - cluster.open-cluster-management.io
   - operator.open-cluster-management.io
   resources:
@@ -1049,6 +1082,7 @@ rules:
   resources:
   - managedserviceaccounts
   verbs:
+  - create
   - delete
   - get
   - list
@@ -1267,6 +1301,28 @@ rules:
   - cluster.open-cluster-management.io
   resources:
   - managedclusters
+  - managedclusters/accept
+  - managedclusters/finalizers
+  - managedclusters/status
+  - managedclustersetbindings
+  - managedclustersetbindings/finalizers
+  - managedclustersets
+  - managedclustersets/bind
+  - managedclustersets/finalizers
+  - managedclustersets/join
+  - placements
+  - placements/finalizers
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cluster.open-cluster-management.io
+  resources:
+  - managedclusters
   - managedclusters/finalizers
   - managedclusters/status
   verbs:
@@ -1432,6 +1488,8 @@ rules:
   - dnses
   verbs:
   - get
+  - list
+  - watch
 - apiGroups:
   - config.openshift.io
   resources:
@@ -1623,6 +1681,32 @@ rules:
   - extensions.hive.openshift.io
   resources:
   - agentclusterinstalls/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - extensions.hive.openshift.io
+  resources:
+  - imageclusterinstalls
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - extensions.hive.openshift.io
+  resources:
+  - imageclusterinstalls/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - extensions.hive.openshift.io
+  resources:
+  - imageclusterinstalls/status
   verbs:
   - get
   - patch
