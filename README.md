@@ -23,6 +23,8 @@ bash ./prepare/olm/prepare-olm.sh
 ## Install MCE via OLM
 1. Create ns `multicluster-engine`, fill your `dockerconfigjson` to the image pull secret `multicluster-engine/prerequisites/image-pull-secret.yaml` and create image pull secret in the `multicluster-engine` ns.
 
+The images are from `quay.io` and `quay.io:443 ` in the MCE catalogSource.
+
 ```
 kubectl apply -k multicluster-engine/prerequisites/
 
@@ -43,7 +45,7 @@ kubectl apply -k multicluster-engine/samples
 ```
 
 ## ## Install MCE via manifests
-1. Create ns `multicluster-engine`, fill your `dockerconfigjson` to the image pull secret `multicluster-engine/prerequisites/image-pull-secret.yaml` and create image pull secret in the `multicluster-engine` ns.
+1. Create ns `multicluster-engine`. The images in the manifests are all public, no need image pull secret.
 
 ```
 kubectl apply -k multicluster-engine/prerequisites/
@@ -66,6 +68,8 @@ kubectl apply -k multicluster-engine/samples
 ## Install ACM
 
 1. Create ns `open-cluster-management`, fill your `dockerconfigjson` to the image pull secret `multiclusterhub/prerequisites/image-pull-secret.yaml` and create image pull secret in the `open-cluster-management` and `olm` ns.
+
+The images are from `quay.io` and `quay.io:433 ` in the ACM catalogSource.
 
 ```
 kubectl apply -k multiclusterhub/prerequisites/

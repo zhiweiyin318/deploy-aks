@@ -66,7 +66,7 @@ spec:
           value: quay.io/stolostron/assisted-installer-agent@sha256:9225012457add66d9c16c125fd23e69d01c4ca20616c051491d44fd02d13fa53
         - name: OPERAND_IMAGE_ASSISTED_INSTALLER_CONTROLLER
           value: quay.io/stolostron/assisted-installer-controller@sha256:526c70438c0ff55d6ad44f27e351954cf1fc51fcc02d7adb466acdc44ec51c44
-        - name: OPERAND_IMAGE_ASSISTED_SERVICE_9
+        - name: OPERAND_IMAGE_ASSISTED_SERVICE
           value: quay.io/stolostron/assisted-service@sha256:e78ace14be9a85a4abba8c5cbc47b854a4155d164e0bbf5dec4e9576cbba6119
         - name: OPERAND_IMAGE_ASSISTED_SERVICE_8
           value: quay.io/stolostron/assisted-service-el8@sha256:0d5fad3e1cf5a0319c9e52656810330559fab11357c6d69d18cdef0f55628643
