@@ -25,6 +25,8 @@ bash ./prepare/olm/prepare-olm.sh
 
 The images are from `quay.io` and `quay.io:443 ` in the MCE catalogSource.
 
+The test images are all public, so no need to fill `dockerconfigjson`.
+
 ```
 kubectl apply -k multicluster-engine/prerequisites/
 
@@ -36,7 +38,7 @@ kubectl apply -k multicluster-engine/prerequisites/
 kubectl apply -k multicluster-engine/olm
 ```
 
-3. Install multicluster-engine CR and klusterletConfig.
+3. Install multicluster-engine CR and klusterletConfig after the `multicluster-engine-operator` pods are running in the `multicluster-engine` ns.
 
 Change the hubKubeAPIServerURL in` multicluster-engine/samples/klusterletconfig.yaml` and then deploy.
 
@@ -71,6 +73,8 @@ kubectl apply -k multicluster-engine/samples
 
 The images are from `quay.io` and `quay.io:433 ` in the ACM catalogSource.
 
+The test images are all public, so no need to fill `dockerconfigjson`.
+
 ```
 kubectl apply -k multiclusterhub/prerequisites/
 
@@ -82,7 +86,7 @@ kubectl apply -k multiclusterhub/prerequisites/
 kubectl apply -k multiclusterhub/olm
 ```
 
-3. Install MCH CR 
+3. Install MCH CR after the pods `multiclusterhub-operator` are running in `open-cluster-management` ns.  
 
 ```
 kubectl apply -f multiclusterhub/samples/multiclusterhub.yaml
