@@ -15,7 +15,7 @@ spec:
     components:
     - enabled: false
       name: app-lifecycle
-    - enabled: false
+    - enabled: true
       name: cluster-lifecycle
     - enabled: false
       name: cluster-permission
