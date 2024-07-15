@@ -98,3 +98,65 @@ Change the hubKubeAPIServerURL in `multicluster-engine/samples/klusterletconfig.
 ```
 kubectl apply -f multiclusterhub/samples/klusterletconfig.yaml
 ```
+
+5. Import managed cluster
+Refer to the doc: https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/2.10/html/clusters/cluster_mce_overview#importing-managed-cluster-cli
+
+Only need enable `certPolicyController` and `policyController` in the `KlusterletAddonConfig` CR.
+
+```yaml
+    apiVersion: agent.open-cluster-management.io/v1
+    kind: KlusterletAddonConfig
+    metadata:
+      name: <cluster name>
+      name: <cluster namespace>
+    spec:
+      certPolicyController:
+        enabled: true
+      policyController:
+        enabled: true
+
+```
+
+6. uninstall ACM
+
+    6.1. delete MCH CR
+    ```bash
+      kubectl delete mch -n open-cluster-management multiclusterhub
+    ```
+    this steps may take several minutes. 
+    can go to the next step if MCE operator and CR cannot be found.
+
+
+    6.2 delete acm subscriptions
+    ```bash
+    kubectl delete subscriptions.operators.coreos.com -n open-cluster-management acm-operator-subscription
+
+    kubectl delete csv -n open-cluster-management advanced-cluster-management.v2.11.0
+    ```
+
+    6.3 delete open-cluster-management ns
+    ```bash
+    kubectl delete ns open-cluster-management
+    ```
+      if mch CR is deleting, force delete it 
+    ```
+    kubectl patch mch -n open-cluster-management multiclusterhub --type=merge -p '{"metadata":{"finalizers": []}}'
+    ```
+
+
+    6.4 delete catalogSource
+    ```bash
+    kubectl delete catalogsources.operators.coreos.com -n olm acm-custom-registry multiclusterengine-catalog
+    ```
+    6.5 clean up the leftover
+    ```bash
+ 
+    kubectl delete validatingwebhookconfigurations.admissionregistration.k8s.io multiclusterengines.multicluster.openshift.io multiclusterhub-operator-validating-webhook ocm-validating-webhook
+
+    kubectl get pods -n olm | grep acm | awk '{print $1}' | xargs oc delete pods -n olm
+
+    kubectl get pods -n olm | grep multiclusterengine | awk '{print $1}' | xargs oc delete pods -n olm
+
+    kubectl delete service -n olm acm-custom-registry multiclusterengine-catalog
+    ```

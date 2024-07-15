@@ -131,7 +131,7 @@ spec:
         - name: OPERAND_IMAGE_MANAGED_SERVICEACCOUNT_E2E
           value: quay.io/stolostron/managed-serviceaccount-e2e@sha256:b269d88e30551636e024aa1472ea4dd71b873b5a2778a199b32732488fd776fb
         - name: OPERAND_IMAGE_MANAGEDCLUSTER_IMPORT_CONTROLLER
-          value: quay.io/stolostron/managedcluster-import-controller@sha256:02e8b08debb21198244059d1f0f6c5ad66ea6537a8dd3e4d75561dae9801dd7a
+          value: quay.io/stolostron/managedcluster-import-controller@sha256:f58b1a964d725eabaef6efabf93d624e47807f136baea18b306df424a1f575ca
         - name: OPERAND_IMAGE_MULTICLOUD_MANAGER
           value: quay.io/stolostron/multicloud-manager@sha256:6f3818a3ae6bcd44f47ab0ef35617b305004b01e5b79ce7e2432030f47df6bb3
         - name: OPERAND_IMAGE_PLACEMENT
