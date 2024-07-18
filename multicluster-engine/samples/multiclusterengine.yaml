@@ -13,9 +13,9 @@ spec:
         name: cluster-manager
       - enabled: true
         name: server-foundation
-      - enabled: true
+      - enabled: false
         name: hypershift-local-hosting
-      - enabled: true
+      - enabled: false
         name: hypershift
       - enabled: false
         name: cluster-lifecycle
