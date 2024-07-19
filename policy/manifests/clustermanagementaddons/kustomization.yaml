@@ -1,0 +1,4 @@
+resources:
+- cert-policy-cma.yaml
+- config-policy-cma.yaml
+- governamce-policy-framework-cma.yaml

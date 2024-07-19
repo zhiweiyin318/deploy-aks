@@ -1,0 +1,4 @@
+resources:
+- cert-policy-controller-addon.yaml
+- config-policy-controller-addon.yaml
+- governance-policy-framework-addon.yaml
