@@ -97,7 +97,7 @@ Need to create policy addon CRs to each managed cluster namespace to enable addo
     kubectl apply -k multiclusterhub/prerequisites/
     ```
 
-2. Install MCE catalogSource and subscription.
+2. Install ACM and MCE catalogSources and subscpriton.
 
     ```
     kubectl apply -k multiclusterhub/olm
